@@ -6,11 +6,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from ArrayUtil import one_dim_array_reshape
 
-file_name = "C:/Caio/git/DataScience/MachineLearning/DataSets/ex1data1.txt"
+file_name = "DataSets/LinearRegression/ex1data1.txt"
 data = pd.read_csv(file_name, names=['X', 'Y'])
 
 #normalize Data
-# print(data['X'].head())
 scalerX = StandardScaler().fit(data[['X']])
 data['X'] = scalerX.transform(data[['X']])
 
@@ -22,11 +21,11 @@ X_train = train['X']
 Y_train = train['Y']
 X_test = test['X']
 Y_test = test['Y']
-model = LinearRegression.GradientDescent(maxIterations=10000,alpha=0.01)
+model = LinearRegression.GradientDescent(maxIterations=10000,alpha=0.1)
 model.fit(one_dim_array_reshape(X_train.values),one_dim_array_reshape(Y_train.values))
 
 # Plot regressão linear
-predictions = [model.predict(x) for x in X_test.values]
+predictions = [model.predict(x) for x in np.insert(one_dim_array_reshape(X_test.values), 0, 1, axis=1)]
 X_test = scalerX.inverse_transform(X_test)
 Y_test = scalerY.inverse_transform(Y_test)
 predictions = scalerY.inverse_transform(predictions)

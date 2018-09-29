@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
-file_name = "C:/Caio/git/DataScience/MachineLearning/DataSets/ex1data2.txt"
+file_name = "DataSets/LinearRegression/ex1data2.txt"
 data = pd.read_csv(file_name, names=['X1', 'X2', 'Y'])
 
 #normalize Data
