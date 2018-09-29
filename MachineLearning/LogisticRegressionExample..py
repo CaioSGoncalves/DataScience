@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import numpy as np
-from ArrayUtil import one_dim_array_reshape
 
 file_name = "DataSets/LogisticRegression/ex2data1.txt"
 data = pd.read_csv(file_name, names=['X1', 'X2', 'Y'])
