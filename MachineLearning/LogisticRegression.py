@@ -20,7 +20,6 @@ class GradientDescent(object):
             ErrorTotal = 0
             for i in range(len(entries)):
                 sigmoid_output = self.sigmoid(sum(self.W * entries[i]))
-                Hypothesis = self.decision_boundary(sigmoid_output)
                 Error = self.cost(sigmoid_output, label[i])
                 ErrorTotal += Error
                 Gradient += (sigmoid_output - label[i]) * entries[i]
