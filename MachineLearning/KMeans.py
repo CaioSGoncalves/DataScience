@@ -6,19 +6,18 @@ from copy import deepcopy
 
 class KMeans(object):
 
-    def __init__(self, k=3, tolerancia=0.0001, max_iterations=500):
+    def __init__(self, k=3, tolerancia=0.001, max_iterations=500):
         self.k = k
         self.tolerancia = tolerancia
         self.max_iterations = max_iterations        
 
-    def fit(self, data, n_clusters=3):        
-        self.otimizado = False
+    def fit(self, data, n_clusters=3):
         self.initialize_centroids(data)
         for _ in range(self.max_iterations):
-
+            self.otimizado = True
             self.initialize_classes()    
 
-            # Calcula a distancia entre os pontos e os clusters. Escolhe o cetroid mais proximo
+            # Calcula a distancia entre os pontos e os clusters. Escolhe o centroid mais proximo
             for sample in data:
                 distances = [self.Distancia_Euclidiana(sample, centroid) for centroid in self.centroids]
                 classification = distances.index(min(distances))
@@ -26,7 +25,7 @@ class KMeans(object):
             
             self.recalcular_centroids()
 
-            # Termina se estiver otimizado: se os centroids alteram pouco a posicao(menos que a tolerancia definida)	
+            # Termina se estiver otimizado: se os centroids alteram pouco a posicao(menos que a tolerancia definida)
             if self.otimizado:
                 break    
 
@@ -51,9 +50,9 @@ class KMeans(object):
         for i in range(len(self.centroids)):
             centroid_original = anterior[i]
             centroid_atual = self.centroids[i]
-            if np.sum((centroid_atual - centroid_original)/centroid_original * 100.0) > self.tolerancia:
+            
+            if np.sum(np.abs((centroid_atual - centroid_original)/centroid_original) * 100.0) > self.tolerancia:
                 self.otimizado = False
-
 
     def Distancia_Euclidiana(self, matriz_A, matriz_B):
         distancia = 0
