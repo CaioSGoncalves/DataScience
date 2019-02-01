@@ -57,5 +57,6 @@ class KMeans(object):
         distancia = 0
         for i in range(len(matriz_A)):
             distancia += (matriz_A[i] - matriz_B[i]) ** 2
-            ed = math.sqrt(distancia)
+            
+        ed = math.sqrt(distancia)
         return ed   
