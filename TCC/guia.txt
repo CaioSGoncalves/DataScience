@@ -8,3 +8,19 @@
 [Twitter] Buscar links do twitter no banco
 [Twitter] Buscar tweets de cada um
 [Twitter] Salvar no banco
+
+
+2: Dados GitHub:
+    Banco SQL:
+        Tabela Repositorios:
+            Informacoes Repositorios
+            id Owner
+        Tabela Usuários(Owner e Contributors):
+            Informacoes usuario
+            id Repositorios
+
+    Banco MongoDB:
+        Collection Repositorios:
+            Informacoes Repositorios
+            Objeto Owner (com informacoes usuario)
+            lista de objetos contributors (com informacoes usuario)
