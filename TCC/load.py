@@ -16,14 +16,14 @@ def collect_contributors(repositories):
                 have_twitter = 'twitter' in urlparse(contributor['blog']).netloc
                 already_inserted = contributor['login'] in contributors_twitter
                 if (have_twitter and not already_inserted):
-                    contributor['repositories'] = [repository]
-                    contributors_twitter[contributor['login']] = contributor
+                #     contributor['repositories'] = [repository]
+                #     contributors_twitter[contributor['login']] = contributor
                     print('OK + ' + contributor['blog'] + ' repository ' + repository['name'])
                 elif (have_twitter and already_inserted):
                         contributor_inserted = contributors_twitter[contributor['login']]
                         contributor_inserted['repositories'].append(repository)
-                        print('passou aqui ' + contributor_inserted['blog'] + ' repository ') 
-                        print(contributor_inserted['repositories'])
+                        # print('passou aqui ' + contributor_inserted['blog'] + ' repository ') 
+                        # print(contributor_inserted['repositories'])
     return list(contributors_twitter.values())
 
 
@@ -46,14 +46,27 @@ def collect_repositories(query, number_of_pages):
         if (repository is not None):
             repositories.extend(repository['items'])
     return repositories
+#     repositories = dict()
+#     for page in range(number_of_pages):
+#         print('Page', page)
+#         # query parameter format = term+language:python
+#         repository = _api_github.search_repositories(query=query, page=page+1)
+#         for repo in repository['items']:
+#                 already_inserted = repo['name'] in repositories
+#                 if (not already_inserted):
+#                         repositories[repo['name']] = repo
+        
+#     return list(repositories.values())
 
 
 def collect_data(query, number_of_pages):
     values_dict = dict()
     # values_dict['repositories']
     repositories = collect_repositories(query, number_of_pages)
+    print('Number of Repositories Collected: ', len(repositories))
     # values_dict['owners'] = collect_owners(values_dict['repositories'])
     values_dict['users'] = collect_contributors(repositories)
+    print('Number of Users Collected: ', len(values_dict['users']))
     return values_dict
 
 
@@ -63,7 +76,7 @@ def insert_data(db_name, values_dict):
         database_util.insert_multiples(db_name, col_name, values)
 
 
-values_dict = collect_data(query='language:python', number_of_pages=5)
+values_dict = collect_data(query='language:python', number_of_pages=1)
 
-# insert_data(db_name='git_hub', values_dict=values_dict)
+# insert_data(db_name='github_twitter', values_dict=values_dict)
 # organize_data

@@ -27,9 +27,11 @@
     
     Banco MongoDB 2:
         Collection Users:
-            Informacoes Users
-            Lista repositorios que contribui:
-                Informacoes de repositorio e data primeiro/ultimo commit deste user
+            Informacoes Principais Users
+            Objeto GitHub
+                Informacoes GitHub desse user
+                Lista repositorios que contribui:
+                    Informacoes de repositorio e data primeiro/ultimo commit deste user
             Objeto Twitter:
                 Informacoes Twitter desse user
                 Lista Tweets   
