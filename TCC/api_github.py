@@ -21,4 +21,4 @@ class API_GitHub(API_Base):
     def get_contributors(self, repository):
         url = repository['url'] + '/contributors'
         contributors = super().make_request(url)
-        return [self.get_user(contributor['url']) for contributor in contributors]
+        return [self.get_user(contributor['url']) for contributor in contributors if contributor is not None]

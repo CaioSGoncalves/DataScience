@@ -11,7 +11,7 @@ class API_Twitter(API_Base):
                           TWITTER_ACCESS_TOKEN_SECRET)
         super().__init__('https://api.twitter.com/1.1', auth=self.auth)
 
-    def get_users(self, screen_name):
+    def get_user(self, screen_name):
         params = {'screen_name':screen_name}
         return super().make_request(self._url_base+'/users/show.json', params)
 
@@ -19,8 +19,8 @@ class API_Twitter(API_Base):
         params = {'screen_name':screen_name}
         return super().make_request(self._url_base+'/statuses/user_timeline.json', params)
 
-screen_name = 'kevingo'
-api = API_Twitter()
-caio = api.get_users(screen_name)
-tweets = api.get_user_tweets(screen_name)
-print(tweets[1])
+# screen_name = 'kevingo'
+# api = API_Twitter()
+# caio = api.get_user(screen_name)
+# tweets = api.get_user_tweets(screen_name)
+# print(caio)
