@@ -1,4 +1,4 @@
-from api_base import API_Base
+from APIs.api_base import API_Base
 from credentials import TWITTER_CONSUMER_KEY,TWITTER_CONSUMER_SECRET,TWITTER_ACCESS_TOKEN,TWITTER_ACCESS_TOKEN_SECRET
 from requests_oauthlib import OAuth1
 

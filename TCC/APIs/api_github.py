@@ -1,5 +1,5 @@
 import os
-from api_base import API_Base
+from APIs.api_base import API_Base
 from credentials import GIT_USER, GIT_TOKEN
 
 class API_GitHub(API_Base):

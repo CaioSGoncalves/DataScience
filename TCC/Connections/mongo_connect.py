@@ -1,4 +1,5 @@
 import pymongo
+from pymongo.operations import ReplaceOne
 
 class MongoDB_Util():
     _host_name = ''
@@ -35,21 +36,14 @@ class MongoDB_Util():
         collection = db[col_name]
         return collection.drop()
 
+    def upsert_many(self, db_name, col_name, values):
+        db = self._client[db_name]
+        col = db[col_name]
+        for value in values:
+            col.update({'_id':value['_id']}, value, upsert=True)
 
-# teste = MongoDB_Util('localhost')
-# values = [
-#             { "name": "Amy", "address": "Apple st 652"},
-#             { "name": "Hannah", "address": "Mountain 21"},
-#             { "name": "Michael", "address": "Valley 345"},
-#             { "name": "Sandy", "address": "Ocean blvd 2"},
-#             { "name": "Betty", "address": "Green Grass 1"},
-#             { "name": "Richard", "address": "Sky st 331"},
-#             { "name": "Susan", "address": "One way 98"},
-#             { "name": "Vicky", "address": "Yellow Garden 2"},
-#             { "name": "Ben", "address": "Park Lane 38"},
-#             { "name": "William", "address": "Central st 954"},
-#             { "name": "Chuck", "address": "Main Road 989"},
-#             { "name": "Viola", "address": "Sideway 1633"}
-#         ]
-
-# teste.insert_multiples('db1',  'col1', values)
+    def bulk_upsert_many(self, db_name, col_name, values):
+        db = self._client[db_name]
+        col = db[col_name]
+        operations = [ ReplaceOne(filter={'_id':value['_id']}, replacement=value, upsert=True) for value in values ]
+        result = col.bulk_write(operations, ordered=False)

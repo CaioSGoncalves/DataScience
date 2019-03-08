@@ -18,8 +18,4 @@ class API_Base:
             data = json.loads(response.content)
             return data
         print(response.status_code)
-        print(response.headers)
-        # if (response.status_code == 403):
-        #     sleep(3900)
-        #     self.make_request(url, params)
         return None
