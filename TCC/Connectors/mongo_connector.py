@@ -1,7 +1,7 @@
 import pymongo
 from pymongo.operations import ReplaceOne
 
-class MongoDB_Util():
+class MongoDB_Connector():
     _host_name = ''
     _port = 27017
     _client = None

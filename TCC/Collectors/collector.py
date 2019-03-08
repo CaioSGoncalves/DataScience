@@ -1,12 +1,9 @@
+from urllib.parse import urlparse
 from APIs.api_github import API_GitHub
 from APIs.api_twitter import API_Twitter
-from Connections.mongo_connect import MongoDB_Util
-from urllib.parse import urlparse
 
 _api_github = API_GitHub()
 _api_twitter = API_Twitter()
-database_util = MongoDB_Util('localhost')
-
 
 def collect_contributors(repositories):
     print('Collecting contributors')
@@ -39,21 +36,6 @@ def collect_twitter_data(github_with_twitter):
                     twitter_data[github_login] = twitter_user
         return twitter_data
 
-def link_data(github_profiles, twitter_profiles, query):
-        print('Linking data')
-        user_data = list()
-        for github_login, _ in github_profiles.items():
-                user = dict()
-                user['_id'] = github_profiles[github_login]['id']
-                user['github_login'] = github_login
-                user['have_twitter'] = github_profiles[github_login]['have_twitter']
-                user['twitter_collected'] = github_login in twitter_profiles.keys()
-                user['github'] = github_profiles[github_login]
-                user['twitter'] = twitter_profiles.get(github_login)
-                user['tag'] = query
-                user_data.append(user) 
-        return user_data
-
 def collect_repositories(query, number_of_pages):
     print('Collecting repositories: ' + str(query))
     repositories = list()
@@ -63,21 +45,3 @@ def collect_repositories(query, number_of_pages):
         if (repository is not None):
             repositories.extend(repository['items'])
     return repositories
-
-
-def collect_data(query, number_of_pages):
-    values_dict = dict()
-    repositories = collect_repositories(query, number_of_pages)
-    print('Number of Repositories Collected: ', len(repositories))
-    github_profiles, github_with_twitter = collect_contributors(repositories)
-    print('Number of GitHub Users Collected: ', len(github_profiles))
-    print('Number of GitHub Users with Twitter Collected: ', len(github_with_twitter))
-    twitter_profiles = collect_twitter_data(github_with_twitter)
-    values_dict['users'] = link_data(github_profiles, twitter_profiles, query)
-    return values_dict
-
-
-def insert_data(db_name, values_dict):
-    for col_name, values in values_dict.items():
-        print('Inserting ' + col_name)
-        database_util.bulk_upsert_many(db_name, col_name, values)
